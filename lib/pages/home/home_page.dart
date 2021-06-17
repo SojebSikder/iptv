@@ -128,6 +128,11 @@ class _HomePageState extends State<HomePage> {
                           // _videoPlayerController6.pause();
                           // _videoPlayerController6.seekTo(Duration(seconds: 0));
 
+                          setState(() {
+                            _videoPlayerController1 =
+                                VideoPlayerController.network(
+                                    "${channels[index]['link']}");
+                          });
                           _chewieController = ChewieController(
                             videoPlayerController:
                                 _videoPlayerController1, //Control the first playback control

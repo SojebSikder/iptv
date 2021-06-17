@@ -9,8 +9,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late TargetPlatform
-      _platform; ////The target platform, emmmm does not understand
+  // late TargetPlatform
+  //     _platform;
   late VideoPlayerController
       _videoPlayerController1; //Wuhan live broadcast //Control instantiation is the same as below
   // late VideoPlayerController _videoPlayerController2; //CCTV13
@@ -20,12 +20,22 @@ class _HomePageState extends State<HomePage> {
   // late VideoPlayerController _videoPlayerController6; //Huya Movie
   late ChewieController _chewieController;
 
+  var channels = [
+    {
+      "title": "Bd Channel",
+      "link": "http://tv.satiptvlinks.com/bd.m3u",
+    },
+    {
+      "title": "Forign Channel",
+      "link": "https://tv-trthaber.live.trt.com.tr/master.m3u8",
+    }
+  ];
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _videoPlayerController1 =
-        VideoPlayerController.network('http://tv.satiptvlinks.com/bd.m3u');
+    _videoPlayerController1 = VideoPlayerController.network(
+        'https://tv-trthaber.live.trt.com.tr/master.m3u8');
 
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController1,
@@ -73,9 +83,11 @@ class _HomePageState extends State<HomePage> {
         ],
         title: Text("IPTV"),
       ),
-      body: Column(
+      body: ListView(
+        shrinkWrap: true,
         children: <Widget>[
-          Expanded(
+          Container(
+            height: 200.0,
             child: Center(
               child: Chewie(
                 controller: _chewieController,
@@ -89,47 +101,50 @@ class _HomePageState extends State<HomePage> {
             },
             child: Text('Fullscreen'),
           ),
-          Row(
-            //Row flutter layout, corresponding to Column
-            children: <Widget>[
-              //children child silly, but there can be children in children
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      //State
-                      _chewieController.dispose();
-
-                      // _videoPlayerController2
-                      //     .pause(); //The second playback function is paused
-                      // _videoPlayerController2.seekTo(
-                      //     Duration(seconds: 0)); //Set the progress bar to 0
-                      // _videoPlayerController3.pause();
-                      // _videoPlayerController3.seekTo(Duration(seconds: 0));
-                      // _videoPlayerController4.pause();
-                      // _videoPlayerController4.seekTo(Duration(seconds: 0));
-                      // _videoPlayerController5.pause();
-                      // _videoPlayerController5.seekTo(Duration(seconds: 0));
-                      // _videoPlayerController6.pause();
-                      // _videoPlayerController6.seekTo(Duration(seconds: 0));
-
-                      _chewieController = ChewieController(
-                        videoPlayerController:
-                            _videoPlayerController1, //Control the first playback control
-                        aspectRatio: 3 / 2,
-                        autoPlay: true,
-                        looping: true,
-                      );
-                    });
-                  },
+          ListView.builder(
+              shrinkWrap: true,
+              itemCount: channels.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  alignment: Alignment.center,
                   child: Padding(
-                    child: Text("TV 1"),
-                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          //State
+                          _chewieController.dispose();
+
+                          // _videoPlayerController2
+                          //     .pause(); //The second playback function is paused
+                          // _videoPlayerController2.seekTo(
+                          //     Duration(seconds: 0)); //Set the progress bar to 0
+                          // _videoPlayerController3.pause();
+                          // _videoPlayerController3.seekTo(Duration(seconds: 0));
+                          // _videoPlayerController4.pause();
+                          // _videoPlayerController4.seekTo(Duration(seconds: 0));
+                          // _videoPlayerController5.pause();
+                          // _videoPlayerController5.seekTo(Duration(seconds: 0));
+                          // _videoPlayerController6.pause();
+                          // _videoPlayerController6.seekTo(Duration(seconds: 0));
+
+                          _chewieController = ChewieController(
+                            videoPlayerController:
+                                _videoPlayerController1, //Control the first playback control
+                            aspectRatio: 3 / 2,
+                            autoPlay: true,
+                            looping: true,
+                          );
+                        });
+                      },
+                      child: Padding(
+                        child: Text("${channels[index]['title']}"),
+                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ],
-          ),
+                );
+              }),
         ],
       ),
     );

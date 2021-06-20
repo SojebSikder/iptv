@@ -55,6 +55,7 @@ class _HomePageState extends State<HomePage> {
           },
           child: ListView(
             //shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
             children: [
               Consumer<CategoryProvider>(
                 builder: (context, categoryData, child) {
@@ -65,6 +66,7 @@ class _HomePageState extends State<HomePage> {
                       if (snapshot.hasData) {
                         return ListView.builder(
                           shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
                           itemCount: category.length,
                           itemBuilder: (context, index) {
                             return ListTile(

@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
           },
           child: ListView(
             //shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            //physics: NeverScrollableScrollPhysics(),
             children: [
               Consumer<CategoryProvider>(
                 builder: (context, categoryData, child) {
@@ -64,13 +64,23 @@ class _HomePageState extends State<HomePage> {
                     future: loadCategoryForFuture(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
+                        // Category List
                         return ListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: category.length,
                           itemBuilder: (context, index) {
                             return ListTile(
-                                title: Text("${category[index]['title']}"));
+                              title: Text("${category[index]['title']}"),
+                              // Channel List
+                              subtitle: ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: category.length,
+                                  itemBuilder: (context, index) {
+                                    return Text("Hello World");
+                                  }),
+                            );
                           },
                         );
                       } else {

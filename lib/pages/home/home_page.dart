@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:iptv/api/category.dart';
+import 'package:iptv/pages/video_player/video_player.dart';
 import 'package:iptv/provider/CategoryProvider.dart';
 import 'package:iptv/provider/ChannelProvider.dart';
+import 'package:iptv/services/ApiService.dart';
+import 'package:iptv/widgets/CircleProgress.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,7 +21,7 @@ class _HomePageState extends State<HomePage> {
     await context.read<ChannelProvider>().fetchChannels();
 
     //print(context.read<ChannelProvider>().channels['data']);
-    print(context.read<CategoryProvider>().category);
+    //print(context.read<CategoryProvider>().category);
   }
 
   @override
@@ -25,8 +30,20 @@ class _HomePageState extends State<HomePage> {
     loadData();
   }
 
+  loadCategoryForFuture() async {
+    //var data = await CategoryApi().fetchCategory();
+
+    var result = await ApiService().getData(apiUrl: "/category", auth: false);
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.dark.copyWith(
+          statusBarColor: Colors.blue,
+          statusBarIconBrightness: Brightness.dark),
+    );
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -39,7 +56,28 @@ class _HomePageState extends State<HomePage> {
           child: ListView(
             //shrinkWrap: true,
             children: [
-              Text("Hello World"),
+              Consumer<CategoryProvider>(
+                builder: (context, categoryData, child) {
+                  var category = categoryData.category['data'];
+                  return FutureBuilder(
+                    future: loadCategoryForFuture(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: category.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                                title: Text("${category[index]['title']}"));
+                          },
+                        );
+                      } else {
+                        return CircleProgressWidget();
+                      }
+                    },
+                  );
+                },
+              ),
             ],
           ),
         ),

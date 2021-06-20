@@ -7,7 +7,7 @@ class CategoryProvider extends ChangeNotifier {
   dynamic get category => _category == null ? "" : _category;
 
   fetchCategory() async {
-    var data = await CategoryApi().fetchCategory()();
+    var data = await CategoryApi().fetchCategory();
     _category = data;
     notifyListeners();
   }

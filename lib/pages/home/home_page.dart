@@ -22,8 +22,8 @@ class _HomePageState extends State<HomePage> {
 
   var channels = [
     {
-      "title": "Bd Channel",
-      "link": "http://tv.satiptvlinks.com/bd.m3u",
+      "title": "Asian TV",
+      "link": "http://10.16.100.203:8082/bangla/tv_asian.m3u8",
     },
     {
       "title": "Forign Channel",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iptv/provider/CategoryProvider.dart';
 import 'package:iptv/provider/ChannelProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -9,9 +10,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   loadData() async {
+    // Fetch Category
+    await context.read<CategoryProvider>().fetchCategory();
+    // Fetch Channels
     await context.read<ChannelProvider>().fetchChannels();
 
-    print(context.read<ChannelProvider>().channels['data']);
+    //print(context.read<ChannelProvider>().channels['data']);
+    print(context.read<CategoryProvider>().category);
   }
 
   @override

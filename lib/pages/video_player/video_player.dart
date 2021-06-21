@@ -83,12 +83,13 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
 
   @override
   Widget build(BuildContext context) {
+    final _screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text(AppConfig().appName()),
       ),
       body: ListView(
-        shrinkWrap: true,
+        //shrinkWrap: true,
         children: [
           Container(
             height: 200.0,

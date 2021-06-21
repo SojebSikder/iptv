@@ -65,27 +65,36 @@ class _ChannelListWidgetState extends State<ChannelListWidget> {
                     subtitle: ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: category.length,
+                      itemCount: category[index]['tvs'].length,
                       itemBuilder: (context, i) {
                         var channel = category[index]['tvs'];
 
-                        print(channel);
-                        return channel == []
-                            ? Container()
+                        //print(channel);
+                        return channel.isEmpty
+                            ? ListTile(
+                                title: Text("null"),
+                              )
                             : ListTile(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (builder) {
-                                        return VideoPlayerPage(
-                                          link: channel[i]['link'],
-                                        );
-                                      },
-                                    ),
-                                  );
-                                },
-                                title: Text("${channel[i]['title']}"),
+                                //title: Text("Hello World"),
+                                title: channel.isEmpty
+                                    ? ListTile(
+                                        title: Text("null"),
+                                      )
+                                    : Text("${channel[i]['title']}"),
+
+                                // onTap: () {
+                                //   Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //       builder: (builder) {
+                                //         return VideoPlayerPage(
+                                //           link: channel[i]['link'],
+                                //         );
+                                //       },
+                                //     ),
+                                //   );
+                                // },
+                                // title: Text("${channel[i]['title']}"),
                               );
                       },
                     ),

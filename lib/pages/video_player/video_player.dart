@@ -1,7 +1,11 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:iptv/config/app_config.dart';
+import 'package:iptv/provider/CategoryProvider.dart';
+import 'package:iptv/services/ApiService.dart';
 import 'package:iptv/widgets/ChannelList.dart';
+import 'package:iptv/widgets/CircleProgress.dart';
+import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerPage extends StatefulWidget {
@@ -18,16 +22,16 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
   late VideoPlayerController _videoPlayerController1;
   late ChewieController _chewieController;
 
-  var channels = [
-    {
-      "title": "Asian TV",
-      "link": "http://10.16.100.203:8082/bangla/tv_asian.m3u8",
-    },
-    {
-      "title": "Forign Channel",
-      "link": "https://tv-trthaber.live.trt.com.tr/master.m3u8",
-    }
-  ];
+  // var channels = [
+  //   {
+  //     "title": "Asian TV",
+  //     "link": "http://10.16.100.203:8082/bangla/tv_asian.m3u8",
+  //   },
+  //   {
+  //     "title": "Forign Channel",
+  //     "link": "https://tv-trthaber.live.trt.com.tr/master.m3u8",
+  //   }
+  // ];
 
   @override
   void initState() {
@@ -70,6 +74,12 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
     super.dispose();
   }
 
+  // This is for futureBuilder
+  loadCategoryForFuture() async {
+    var result = await ApiService().getData(apiUrl: "/category", auth: false);
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,56 +97,88 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
               ),
             ),
           ),
-          ElevatedButton(
-            //This is a flat button
-            onPressed: () {
-              _chewieController.enterFullScreen();
-            },
-            child: Text('Fullscreen'),
-          ),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: channels.length,
-            itemBuilder: (context, index) {
-              return Container(
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        //State
-                        _chewieController.dispose();
+          // ElevatedButton(
+          //   //This is a flat button
+          //   onPressed: () {
+          //     _chewieController.enterFullScreen();
+          //   },
+          //   child: Text('Fullscreen'),
+          // ),
+          // Channel List
+          Consumer<CategoryProvider>(
+            builder: (context, categoryData, child) {
+              //
+              var category = categoryData.category['data'];
 
-                        // _videoPlayerController2
-                        //     .pause(); //The second playback function is paused
-                        // _videoPlayerController2.seekTo(
-                        //     Duration(seconds: 0)); //Set the progress bar to 0
+              // fetchChannel();
+              //
+              return FutureBuilder(
+                future: loadCategoryForFuture(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    // Category List
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: category.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text("${category[index]['title']}"),
+                          // Channel List
+                          subtitle: ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            //   childAspectRatio: 0.9, //cardWidth / cardHeight,
+                            //   crossAxisCount: 2,
+                            // ),
+                            itemCount: category[index]['tvs'].length,
+                            itemBuilder: (context, i) {
+                              var channel = category[index]['tvs'];
 
-                        setState(() {
-                          _videoPlayerController1 =
-                              VideoPlayerController.network(
-                                  "${channels[index]['link']}");
-                        });
-                        _chewieController = ChewieController(
-                          videoPlayerController:
-                              _videoPlayerController1, //Control the first playback control
-                          aspectRatio: 3 / 2,
-                          autoPlay: true,
-                          looping: true,
+                              //print(channel);
+                              return channel.isEmpty
+                                  ? Container()
+                                  : ListTile(
+                                      onTap: () {
+                                        setState(() {
+                                          //State
+                                          _chewieController.dispose();
+
+                                          // _videoPlayerController2
+                                          //     .pause(); //The second playback function is paused
+                                          // _videoPlayerController2.seekTo(
+                                          //     Duration(seconds: 0)); //Set the progress bar to 0
+
+                                          setState(() {
+                                            _videoPlayerController1 =
+                                                VideoPlayerController.network(
+                                                    "${channel[i]['link']}");
+                                          });
+                                          _chewieController = ChewieController(
+                                            videoPlayerController:
+                                                _videoPlayerController1, //Control the first playback control
+                                            aspectRatio: 3 / 2,
+                                            autoPlay: true,
+                                            looping: true,
+                                          );
+                                        });
+                                      },
+                                      title: Text("${channel[i]['title']}"),
+                                    );
+                            },
+                          ),
                         );
-                      });
-                    },
-                    child: Padding(
-                      child: Text("${channels[index]['title']}"),
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
-                    ),
-                  ),
-                ),
+                      },
+                    );
+                  } else {
+                    return CircleProgressWidget();
+                  }
+                },
               );
             },
           ),
-          // ChannelListWidget(),
+          // End Channel List
         ],
       ),
     );

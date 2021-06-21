@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
     // Fetch Category
     await context.read<CategoryProvider>().fetchCategory();
     // Fetch Channels
-    await context.read<ChannelProvider>().fetchChannels();
+    // await context.read<ChannelProvider>().fetchChannels();
 
     //print(context.read<ChannelProvider>().channels['data']);
     //print(context.read<CategoryProvider>().category);
@@ -35,6 +35,12 @@ class _HomePageState extends State<HomePage> {
 
     var result = await ApiService().getData(apiUrl: "/category", auth: false);
     return result;
+  }
+
+  fetchChannel(String categoryTitle) async {
+    context
+        .read<ChannelProvider>()
+        .fetchChannelByCategory(category: categoryTitle);
   }
 
   @override
@@ -59,7 +65,11 @@ class _HomePageState extends State<HomePage> {
             children: [
               Consumer<CategoryProvider>(
                 builder: (context, categoryData, child) {
+                  //
                   var category = categoryData.category['data'];
+
+                  // fetchChannel();
+                  //
                   return FutureBuilder(
                     future: loadCategoryForFuture(),
                     builder: (context, snapshot) {
@@ -70,16 +80,28 @@ class _HomePageState extends State<HomePage> {
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: category.length,
                           itemBuilder: (context, index) {
+                            fetchChannel(category[index]['title']);
                             return ListTile(
                               title: Text("${category[index]['title']}"),
                               // Channel List
-                              subtitle: ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: category.length,
-                                  itemBuilder: (context, index) {
-                                    return Text("Hello World");
-                                  }),
+                              subtitle: Consumer<ChannelProvider>(
+                                builder: (context, channelData, child) {
+                                  //
+                                  var channel =
+                                      channelData.channelByCategory['data'];
+
+                                  print(channel);
+                                  //
+                                  return ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: category.length,
+                                    itemBuilder: (context, index) {
+                                      return Text("Hello World");
+                                    },
+                                  );
+                                },
+                              ),
                             );
                           },
                         );

@@ -179,6 +179,7 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
               );
             },
           ),
+
           // End Channel List
         ],
       ),

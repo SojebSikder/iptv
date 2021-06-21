@@ -37,12 +37,6 @@ class _HomePageState extends State<HomePage> {
     return result;
   }
 
-  fetchChannel(String categoryTitle) async {
-    context
-        .read<ChannelProvider>()
-        .fetchChannelByCategory(category: categoryTitle);
-  }
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -80,26 +74,20 @@ class _HomePageState extends State<HomePage> {
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: category.length,
                           itemBuilder: (context, index) {
-                            fetchChannel(category[index]['title']);
                             return ListTile(
                               title: Text("${category[index]['title']}"),
                               // Channel List
-                              subtitle: Consumer<ChannelProvider>(
-                                builder: (context, channelData, child) {
-                                  //
-                                  var channel =
-                                      channelData.channelByCategory['data'];
+                              subtitle: ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: category.length,
+                                itemBuilder: (context, index) {
+                                  var channel = category[index]['tvs'];
 
-                                  print(channel);
-                                  //
-                                  return ListView.builder(
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemCount: category.length,
-                                    itemBuilder: (context, index) {
-                                      return Text("Hello World");
-                                    },
-                                  );
+                                  //print(channel[index]['title']);
+                                  return channel.isEmpty
+                                      ? Container()
+                                      : Text("${channel[index]['title']}");
                                 },
                               ),
                             );

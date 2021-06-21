@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:iptv/api/category.dart';
 import 'package:iptv/pages/video_player/video_player.dart';
 import 'package:iptv/provider/CategoryProvider.dart';
-import 'package:iptv/provider/ChannelProvider.dart';
 import 'package:iptv/services/ApiService.dart';
 import 'package:iptv/widgets/CircleProgress.dart';
 import 'package:provider/provider.dart';

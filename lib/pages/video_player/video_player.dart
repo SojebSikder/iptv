@@ -1,7 +1,6 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:iptv/config/app_config.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerPage extends StatefulWidget {
@@ -74,11 +73,6 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
   @override //The following is the control of the playback function
   void dispose() {
     _videoPlayerController1.dispose();
-    // _videoPlayerController2.dispose();
-    // _videoPlayerController3.dispose();
-    // _videoPlayerController4.dispose();
-    // _videoPlayerController5.dispose();
-    // _videoPlayerController6.dispose();
     _chewieController.dispose();
     super.dispose();
   }
@@ -87,14 +81,6 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // actions: <Widget>[
-        //   IconButton(
-        //     icon: Icon(Icons.group_add), //This is an icon button
-        //     onPressed: () {
-        //       callQQ(); //Press event. Go to the plus group function at the end of this code
-        //     },
-        //   ),
-        // ],
         title: Text(AppConfig().appName()),
       ),
       body: ListView(
@@ -167,17 +153,5 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
         ],
       ),
     );
-  }
-}
-
-//This is the addition of QQ or QQ group?? ?: What can you do it yourself?
-void callQQ({int number = 365700128, bool isGroup = true}) async {
-  String url = isGroup
-      ? 'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=$number&card_type=group&source=qrcode'
-      : 'mqqwpa://im/chat?chat_type=wpa&uin=$number&version=1&src_type=web&web_src=oicqzone.com';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    print('Inaccessible');
   }
 }

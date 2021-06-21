@@ -87,7 +87,19 @@ class _HomePageState extends State<HomePage> {
                                   //print(channel[index]['title']);
                                   return channel.isEmpty
                                       ? Container()
-                                      : Text("${channel[index]['title']}");
+                                      : ListTile(
+                                          onTap: () {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                                    builder: (builder) {
+                                              return VideoPlayerPage(
+                                                link: channel[index]['link'],
+                                              );
+                                            }));
+                                          },
+                                          title: Text(
+                                              "${channel[index]['title']}"),
+                                        );
                                 },
                               ),
                             );

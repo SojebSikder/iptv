@@ -1,14 +1,18 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:iptv/config/app_config.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 
-class VideoPlayer extends StatefulWidget {
+class VideoPlayerPage extends StatefulWidget {
+  final link;
+
+  const VideoPlayerPage({this.link});
   @override
-  _VideoPlayerState createState() => _VideoPlayerState();
+  _VideoPlayerPageState createState() => _VideoPlayerPageState();
 }
 
-class _VideoPlayerState extends State<VideoPlayer> {
+class _VideoPlayerPageState extends State<VideoPlayerPage> {
   // late TargetPlatform
   //     _platform;
   late VideoPlayerController
@@ -34,28 +38,37 @@ class _VideoPlayerState extends State<VideoPlayer> {
   @override
   void initState() {
     super.initState();
-    _videoPlayerController1 = VideoPlayerController.network(
-        'https://tv-trthaber.live.trt.com.tr/master.m3u8');
+    // _videoPlayerController1 = VideoPlayerController.network(
+    //     'https://tv-trthaber.live.trt.com.tr/master.m3u8');
+
+    _videoPlayerController1 = VideoPlayerController.network('${widget.link}');
 
     _chewieController = ChewieController(
-      videoPlayerController: _videoPlayerController1,
-      aspectRatio: 3 / 2, //Aspect ratio
-      autoPlay: false, //Auto play
-      looping: true, //loop
-      // // Try playing around with some of these other options:
-
-      showControls: false, //Display control The following colors feel useless
-      materialProgressColors: ChewieProgressColors(
-        playedColor: Colors.red,
-        handleColor: Colors.blue,
-        backgroundColor: Colors.grey,
-        bufferedColor: Colors.lightGreen,
-      ),
-      placeholder: Container(
-        color: Colors.grey,
-      ),
-      autoInitialize: true, //Automatically initialize emmmmmmm
+      videoPlayerController:
+          _videoPlayerController1, //Control the first playback control
+      aspectRatio: 3 / 2,
+      autoPlay: true,
+      looping: true,
     );
+    // _chewieController = ChewieController(
+    //   videoPlayerController: _videoPlayerController1,
+    //   aspectRatio: 3 / 2, //Aspect ratio
+    //   autoPlay: true, //Auto play
+    //   looping: true, //loop
+    //   // // Try playing around with some of these other options:
+
+    //   showControls: false, //Display control The following colors feel useless
+    //   materialProgressColors: ChewieProgressColors(
+    //     playedColor: Colors.red,
+    //     handleColor: Colors.blue,
+    //     backgroundColor: Colors.grey,
+    //     bufferedColor: Colors.lightGreen,
+    //   ),
+    //   placeholder: Container(
+    //     color: Colors.grey,
+    //   ),
+    //   autoInitialize: true, //Automatically initialize emmmmmmm
+    // );
   }
 
   @override //The following is the control of the playback function
@@ -74,14 +87,15 @@ class _VideoPlayerState extends State<VideoPlayer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.group_add), //This is an icon button
-              onPressed: () {
-                callQQ(); //Press event. Go to the plus group function at the end of this code
-              }),
-        ],
-        title: Text("IPTV"),
+        // actions: <Widget>[
+        //   IconButton(
+        //     icon: Icon(Icons.group_add), //This is an icon button
+        //     onPressed: () {
+        //       callQQ(); //Press event. Go to the plus group function at the end of this code
+        //     },
+        //   ),
+        // ],
+        title: Text(AppConfig().appName()),
       ),
       body: ListView(
         shrinkWrap: true,

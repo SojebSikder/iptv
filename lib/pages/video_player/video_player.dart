@@ -36,6 +36,7 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
   @override
   void initState() {
     super.initState();
+
     // Initial Channel link
     _videoPlayerController1 = VideoPlayerController.network('${widget.link}');
 
@@ -69,9 +70,9 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
 
   @override //The following is the control of the playback function
   void dispose() {
+    super.dispose();
     _videoPlayerController1.dispose();
     _chewieController.dispose();
-    super.dispose();
   }
 
   // This is for futureBuilder

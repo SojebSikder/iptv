@@ -65,6 +65,10 @@ class _ChannelListWidgetState extends State<ChannelListWidget> {
                     subtitle: ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
+                      // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      //   childAspectRatio: 0.9, //cardWidth / cardHeight,
+                      //   crossAxisCount: 2,
+                      // ),
                       itemCount: category[index]['tvs'].length,
                       itemBuilder: (context, i) {
                         var channel = category[index]['tvs'];

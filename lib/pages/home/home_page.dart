@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:iptv/pages/video_player/video_player.dart';
 import 'package:iptv/provider/CategoryProvider.dart';
 import 'package:iptv/services/ApiService.dart';
+import 'package:iptv/widgets/ChannelList.dart';
 import 'package:iptv/widgets/CircleProgress.dart';
 import 'package:provider/provider.dart';
 
@@ -55,61 +56,7 @@ class _HomePageState extends State<HomePage> {
             //shrinkWrap: true,
             //physics: NeverScrollableScrollPhysics(),
             children: [
-              Consumer<CategoryProvider>(
-                builder: (context, categoryData, child) {
-                  //
-                  var category = categoryData.category['data'];
-
-                  // fetchChannel();
-                  //
-                  return FutureBuilder(
-                    future: loadCategoryForFuture(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        // Category List
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: category.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              title: Text("${category[index]['title']}"),
-                              // Channel List
-                              subtitle: ListView.builder(
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount: category.length,
-                                itemBuilder: (context, index) {
-                                  var channel = category[index]['tvs'];
-
-                                  //print(channel[index]['title']);
-                                  return channel.isEmpty
-                                      ? Container()
-                                      : ListTile(
-                                          onTap: () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
-                                                    builder: (builder) {
-                                              return VideoPlayerPage(
-                                                link: channel[index]['link'],
-                                              );
-                                            }));
-                                          },
-                                          title: Text(
-                                              "${channel[index]['title']}"),
-                                        );
-                                },
-                              ),
-                            );
-                          },
-                        );
-                      } else {
-                        return CircleProgressWidget();
-                      }
-                    },
-                  );
-                },
-              ),
+              ChannelListWidget(),
             ],
           ),
         ),

@@ -2,7 +2,7 @@
 class AppConfig {
   /// Get app name
   appName() {
-    return "ChocoWatch";
+    return "Choco TV";
   }
 
   /// Get app slogan

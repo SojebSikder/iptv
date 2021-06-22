@@ -20,6 +20,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   late VideoPlayerController _videoPlayerController1;
   late ChewieController _chewieController;
 
+  BannerAd ad = new BannerAd(
+    size: AdSize.banner,
+    adUnitId: AdmobService.bannerAdUnit,
+    listener: AdmobService.bannerAdlistener,
+    request: AdRequest(),
+  );
+
   loadData() async {
     // Fetch Category
     await context.read<CategoryProvider>().fetchCategory();
@@ -34,6 +41,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addObserver(this);
+    ad.load();
     loadData();
   }
 
@@ -75,21 +83,17 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             //shrinkWrap: true,
             //physics: NeverScrollableScrollPhysics(),
             children: [
-              // Admob ads
-
-              Container(
-                alignment: Alignment.center,
-                width: AdmobService.createBannerAd().size.width.toDouble(),
-                height: AdmobService.createBannerAd().size.height.toDouble(),
-                child: AdWidget(
-                  // key: UniqueKey(),
-                  ad: AdmobService.createBannerAd()..load(),
-                ),
-              ),
-
-              // End Admob ads
               ChannelListWidget(),
             ],
+          ),
+        ),
+        bottomNavigationBar: Container(
+          alignment: Alignment.center,
+          width: AdmobService.createBannerAd().size.width.toDouble(),
+          height: AdmobService.createBannerAd().size.height.toDouble(),
+          child: AdWidget(
+            // key: UniqueKey(),
+            ad: ad,
           ),
         ),
       ),

@@ -1,7 +1,9 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:iptv/config/app_config.dart';
 import 'package:iptv/provider/CategoryProvider.dart';
+import 'package:iptv/services/AdmobService.dart';
 import 'package:iptv/services/ApiService.dart';
 import 'package:iptv/widgets/CircleProgress.dart';
 import 'package:provider/provider.dart';
@@ -33,9 +35,18 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
   //   }
   // ];
 
+  BannerAd ad = new BannerAd(
+    size: AdSize.banner,
+    adUnitId: AdmobService.bannerAdUnit,
+    listener: AdmobService.bannerAdlistener,
+    request: AdRequest(),
+  );
+
   @override
   void initState() {
     super.initState();
+
+    ad.load();
 
     // Initial Channel link
     _videoPlayerController1 = VideoPlayerController.network('${widget.link}');
@@ -186,6 +197,15 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
 
           // End Channel List
         ],
+      ),
+      bottomNavigationBar: Container(
+        alignment: Alignment.center,
+        width: AdmobService.createBannerAd().size.width.toDouble(),
+        height: AdmobService.createBannerAd().size.height.toDouble(),
+        child: AdWidget(
+          // key: UniqueKey(),
+          ad: ad,
+        ),
       ),
     );
   }

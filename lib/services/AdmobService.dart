@@ -29,6 +29,7 @@ class AdmobService {
   }
 
   /// Banner Ad Listener
+
   static BannerAdListener bannerAdlistener = BannerAdListener(
     // Called when an ad is successfully received.
     onAdLoaded: (Ad ad) => print('Ad loaded.'),

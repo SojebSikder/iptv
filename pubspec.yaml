@@ -41,7 +41,7 @@ dependencies:
 
   google_mobile_ads: ^0.13.0
 
-
+  wakelock: ^0.5.2
   fluttertoast: ^8.0.7 
   url_launcher: ^6.0.6
   ext_storage: ^1.0.3

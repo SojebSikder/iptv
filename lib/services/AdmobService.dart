@@ -11,6 +11,7 @@ class AdmobService {
 
   /// Initialize Admob Service
   static initialize() {
+    // ignore: unnecessary_null_comparison
     if (MobileAds.instance == null) {
       MobileAds.instance.initialize();
     }

@@ -1,8 +1,10 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:iptv/pages/video_player/video_player.dart';
 import 'package:iptv/provider/CategoryProvider.dart';
+import 'package:iptv/services/AdmobService.dart';
 import 'package:iptv/services/ApiService.dart';
 import 'package:iptv/widgets/ChannelList.dart';
 import 'package:iptv/widgets/CircleProgress.dart';
@@ -73,19 +75,19 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             //shrinkWrap: true,
             //physics: NeverScrollableScrollPhysics(),
             children: [
-                // Admob ads
-                
-                // Container(
-                //   alignment: Alignment.center,
-                //   width: AdmobService.createBannerAd().size.width.toDouble(),
-                //   height: AdmobService.createBannerAd().size.height.toDouble(),
-                //   child: AdWidget(
-                //     key: UniqueKey(), (first try without it)
-                //     ad: AdmobService.createBannerAd()..load(),
-                //   ),
-                // ),
+              // Admob ads
 
-                // End Admob ads
+              Container(
+                alignment: Alignment.center,
+                width: AdmobService.createBannerAd().size.width.toDouble(),
+                height: AdmobService.createBannerAd().size.height.toDouble(),
+                child: AdWidget(
+                  // key: UniqueKey(),
+                  ad: AdmobService.createBannerAd()..load(),
+                ),
+              ),
+
+              // End Admob ads
               ChannelListWidget(),
             ],
           ),

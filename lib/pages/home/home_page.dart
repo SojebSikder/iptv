@@ -73,6 +73,19 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             //shrinkWrap: true,
             //physics: NeverScrollableScrollPhysics(),
             children: [
+                // Admob ads
+                
+                // Container(
+                //   alignment: Alignment.center,
+                //   width: AdmobService.createBannerAd().size.width.toDouble(),
+                //   height: AdmobService.createBannerAd().size.height.toDouble(),
+                //   child: AdWidget(
+                //     key: UniqueKey(), (first try without it)
+                //     ad: AdmobService.createBannerAd()..load(),
+                //   ),
+                // ),
+
+                // End Admob ads
               ChannelListWidget(),
             ],
           ),

@@ -24,6 +24,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   BannerAd ad = new BannerAd(
     size: AdSize.banner,
     adUnitId: AdmobService.bannerAdUnit,
+    // adUnitId: AdmobService.bannerAdTestUnit,
     listener: AdmobService.bannerAdlistener,
     request: AdRequest(),
   );

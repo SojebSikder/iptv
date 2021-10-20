@@ -21,8 +21,8 @@ class AdmobService {
   static BannerAd createBannerAd() {
     BannerAd ad = new BannerAd(
       size: AdSize.banner,
-      // adUnitId: bannerAdUnit,
-      adUnitId: bannerAdTestUnit,
+      adUnitId: bannerAdUnit,
+      // adUnitId: bannerAdTestUnit,
       listener: bannerAdlistener,
       request: AdRequest(),
     );

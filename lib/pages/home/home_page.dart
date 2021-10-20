@@ -2,6 +2,7 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:iptv/config/app_config.dart';
 import 'package:iptv/pages/video_player/video_player.dart';
 import 'package:iptv/provider/CategoryProvider.dart';
 import 'package:iptv/services/AdmobService.dart';
@@ -73,7 +74,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("ChocoWatch"),
+          title: Text(AppConfig().appName()),
         ),
         body: RefreshIndicator(
           onRefresh: () async {

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "901040276755",
+    "project_id": "choco-tv-c973a",
+    "storage_bucket": "choco-tv-c973a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:901040276755:android:142175b5dd2b538f49c6e6",
+        "android_client_info": {
+          "package_name": "com.sojebsikder.iptv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "901040276755-l2e5jg8s2ku55mcm00ttb5u8vdjo5a46.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvdzyLWMhgs5GN3f3ibrloEVShELhoLc8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "901040276755-l2e5jg8s2ku55mcm00ttb5u8vdjo5a46.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

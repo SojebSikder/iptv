@@ -1,14 +1,9 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:iptv/config/app_config.dart';
-import 'package:iptv/pages/video_player/video_player.dart';
 import 'package:iptv/provider/CategoryProvider.dart';
-import 'package:iptv/services/AdmobService.dart';
-import 'package:iptv/services/ApiService.dart';
 import 'package:iptv/widgets/ChannelList.dart';
-import 'package:iptv/widgets/CircleProgress.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
@@ -33,10 +28,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     // Fetch Category
     await context.read<CategoryProvider>().fetchCategory();
     // Fetch Channels
-    // await context.read<ChannelProvider>().fetchChannels();
-
-    //print(context.read<ChannelProvider>().channels['data']);
-    //print(context.read<CategoryProvider>().category);
   }
 
   @override
@@ -56,13 +47,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       _videoPlayerController1.dispose();
       _chewieController.dispose();
     }
-  }
-
-  loadCategoryForFuture() async {
-    //var data = await CategoryApi().fetchCategory();
-
-    var result = await ApiService().getData(apiUrl: "/category", auth: false);
-    return result;
   }
 
   @override
@@ -89,15 +73,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             ],
           ),
         ),
-        // bottomNavigationBar: Container(
-        //   alignment: Alignment.center,
-        //   width: AdmobService.createBannerAd().size.width.toDouble(),
-        //   height: AdmobService.createBannerAd().size.height.toDouble(),
-        //   child: AdWidget(
-        //     // key: UniqueKey(),
-        //     ad: ad,
-        //   ),
-        // ),
       ),
     );
   }

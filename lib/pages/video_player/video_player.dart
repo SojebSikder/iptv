@@ -73,63 +73,66 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
 
           // fetchChannel();
           //
-          FutureBuilder(
-              future: context.read<CategoryProvider>().fetchCategory(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  var category = snapshot.data['data'];
-                  // Category List
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    // physics: NeverScrollableScrollPhysics(),
-                    itemCount: category.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text("${category[index]['title']}"),
-                        // Channel List
-                        subtitle: ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: category[index]['tvs'].length,
-                          itemBuilder: (context, i) {
-                            var channel = category[index]['tvs'];
+          Expanded(
+            child: FutureBuilder(
+                future: context.read<CategoryProvider>().fetchCategory(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    var category = snapshot.data['data'];
+                    // Category List
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      // physics: NeverScrollableScrollPhysics(),
+                      itemCount: category.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text("${category[index]['title']}"),
+                          // Channel List
+                          subtitle: ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: category[index]['tvs'].length,
+                            itemBuilder: (context, i) {
+                              var channel = category[index]['tvs'];
 
-                            //print(channel);
-                            return channel.isEmpty
-                                ? Container()
-                                : ListTile(
-                                    onTap: () {
-                                      setState(
-                                        () {
-                                          //State
-                                          _chewieController.dispose();
+                              //print(channel);
+                              return channel.isEmpty
+                                  ? Container()
+                                  : ListTile(
+                                      onTap: () {
+                                        setState(
+                                          () {
+                                            //State
+                                            _chewieController.dispose();
 
-                                          setState(() {
-                                            _videoPlayerController1 =
-                                                VideoPlayerController.network(
-                                                    "${channel[i]['link']}");
-                                          });
-                                          _chewieController = ChewieController(
-                                            videoPlayerController:
-                                                _videoPlayerController1, //Control the first playback control
-                                            aspectRatio: 3 / 2,
-                                            autoPlay: true,
-                                            looping: true,
-                                          );
-                                        },
-                                      );
-                                    },
-                                    title: Text("${channel[i]['title']}"),
-                                  );
-                          },
-                        ),
-                      );
-                    },
-                  );
-                } else {
-                  return CircleProgressWidget();
-                }
-              })
+                                            setState(() {
+                                              _videoPlayerController1 =
+                                                  VideoPlayerController.network(
+                                                      "${channel[i]['link']}");
+                                            });
+                                            _chewieController =
+                                                ChewieController(
+                                              videoPlayerController:
+                                                  _videoPlayerController1, //Control the first playback control
+                                              aspectRatio: 3 / 2,
+                                              autoPlay: true,
+                                              looping: true,
+                                            );
+                                          },
+                                        );
+                                      },
+                                      title: Text("${channel[i]['title']}"),
+                                    );
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    return CircleProgressWidget();
+                  }
+                }),
+          )
 
           // End Channel List
         ],

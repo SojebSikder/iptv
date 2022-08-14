@@ -16,7 +16,7 @@ class ChannelProvider extends ChangeNotifier {
     return _channels;
   }
 
-  Future<dynamic> fetchChannelByCategory({required String category}) async {
+  Future<dynamic> fetchChannelByCategory({String category}) async {
     var data = await ChannelApi().fetchChannelByCategory(category: category);
     _channelByCategory = data;
     notifyListeners();

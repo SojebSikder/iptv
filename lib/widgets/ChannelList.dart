@@ -38,7 +38,7 @@ class _ChannelListWidgetState extends State<ChannelListWidget> {
               return Text('Error: ${snapshot.error}');
             } else if (snapshot.hasData) {
               // var category = categoryData.category['data'];
-              late var category = snapshot.data['data'];
+              var category = snapshot.data['data'];
 
               // Category List
               return ListView.builder(

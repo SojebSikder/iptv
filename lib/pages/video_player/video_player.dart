@@ -19,8 +19,8 @@ class VideoPlayerPage extends StatefulWidget {
 class _VideoPlayerPageState extends State<VideoPlayerPage> {
   // late TargetPlatform
   //     _platform;
-  late VideoPlayerController _videoPlayerController1;
-  late ChewieController _chewieController;
+  VideoPlayerController _videoPlayerController1;
+  ChewieController _chewieController;
 
   // BannerAd ad = new BannerAd(
   //   size: AdSize.banner,

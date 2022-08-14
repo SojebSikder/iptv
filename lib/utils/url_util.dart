@@ -12,8 +12,7 @@ class UrlUtil {
   }
 
   /// Download And Save file
-  static downloadAndSaveFile(
-      {required String url, required String fileName}) async {
+  static downloadAndSaveFile({String url, String fileName}) async {
     //print("background permission");
     //await _handlePermission(Permission.storage);
     var status = await Permission.storage.status;

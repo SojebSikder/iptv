@@ -9,7 +9,7 @@ class ChannelApi {
     return body;
   }
 
-  fetchChannelByCategory({required String category}) async {
+  fetchChannelByCategory({String category}) async {
     var result = await ApiService()
         .getData(apiUrl: "/tv?category=" + category, auth: false);
     var body = json.decode(result.body);

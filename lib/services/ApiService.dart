@@ -48,7 +48,7 @@ class ApiService {
       return await http.post(
         Uri.parse(fullUrl),
         body: jsonEncode(data),
-        headers: _setHeaders(prefs.getString("token")!),
+        headers: _setHeaders(prefs.getString("token")),
       );
     }
   }
@@ -65,7 +65,7 @@ class ApiService {
     } else {
       return await http.get(
         Uri.parse(fullUrl),
-        headers: _setHeaders(prefs.getString('token')!),
+        headers: _setHeaders(prefs.getString('token')),
       );
     }
   }
@@ -89,7 +89,7 @@ class ApiService {
       return await http.put(
         Uri.parse(fullUrl),
         body: jsonEncode(data),
-        headers: _setHeaders(prefs.getString('token')!),
+        headers: _setHeaders(prefs.getString('token')),
       );
     }
   }
@@ -106,7 +106,7 @@ class ApiService {
     } else {
       return await http.delete(
         Uri.parse(fullUrl),
-        headers: _setHeaders(prefs.getString('token')!),
+        headers: _setHeaders(prefs.getString('token')),
       );
     }
   }

@@ -13,8 +13,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
-  late VideoPlayerController _videoPlayerController1;
-  late ChewieController _chewieController;
+  VideoPlayerController _videoPlayerController1;
+  ChewieController _chewieController;
 
   // BannerAd ad = new BannerAd(
   //   size: AdSize.banner,
@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     // ad.load();
     loadData();
   }

@@ -16,25 +16,14 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   VideoPlayerController _videoPlayerController1;
   ChewieController _chewieController;
 
-  // BannerAd ad = new BannerAd(
-  //   size: AdSize.banner,
-  //   adUnitId: AdmobService.bannerAdUnit,
-  //   // adUnitId: AdmobService.bannerAdTestUnit,
-  //   listener: AdmobService.bannerAdlistener,
-  //   request: AdRequest(),
-  // );
-
   loadData() async {
-    // Fetch Category
     await context.read<CategoryProvider>().fetchCategory();
-    // Fetch Channels
   }
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    // ad.load();
     loadData();
   }
 
@@ -66,8 +55,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             await loadData();
           },
           child: ListView(
-            //shrinkWrap: true,
-            //physics: NeverScrollableScrollPhysics(),
             children: [
               ChannelListWidget(),
             ],

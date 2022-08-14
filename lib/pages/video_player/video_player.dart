@@ -2,7 +2,6 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:iptv/config/app_config.dart';
 import 'package:iptv/provider/CategoryProvider.dart';
-import 'package:iptv/services/ApiService.dart';
 import 'package:iptv/widgets/CircleProgress.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';

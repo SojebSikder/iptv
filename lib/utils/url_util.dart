@@ -7,8 +7,11 @@ import 'package:url_launcher/url_launcher.dart';
 /// Url Utilities
 class UrlUtil {
   /// Launch Url
-  static void launchURL(String _url) async {
-    await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
+  static void launchURL(String url) async {
+    final Uri _url = Uri.parse(url);
+    if (!await launchUrl(_url)) {
+      throw 'Could not launch $_url';
+    }
   }
 
   /// Download And Save file

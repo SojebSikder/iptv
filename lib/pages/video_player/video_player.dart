@@ -24,19 +24,19 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
   late VideoPlayerController _videoPlayerController1;
   late ChewieController _chewieController;
 
-  BannerAd ad = new BannerAd(
-    size: AdSize.banner,
-    adUnitId: AdmobService.bannerAdUnit,
-    // adUnitId: AdmobService.bannerAdTestUnit,
-    listener: AdmobService.bannerAdlistener,
-    request: AdRequest(),
-  );
+  // BannerAd ad = new BannerAd(
+  //   size: AdSize.banner,
+  //   adUnitId: AdmobService.bannerAdUnit,
+  //   // adUnitId: AdmobService.bannerAdTestUnit,
+  //   listener: AdmobService.bannerAdlistener,
+  //   request: AdRequest(),
+  // );
 
   @override
   void initState() {
     super.initState();
 
-    ad.load();
+    // ad.load();
 
     // Initial Channel link
     _videoPlayerController1 = VideoPlayerController.network('${widget.link}');
@@ -160,15 +160,6 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
 
           // End Channel List
         ],
-      ),
-      bottomNavigationBar: Container(
-        alignment: Alignment.center,
-        width: AdmobService.createBannerAd().size.width.toDouble(),
-        height: AdmobService.createBannerAd().size.height.toDouble(),
-        child: AdWidget(
-          // key: UniqueKey(),
-          ad: ad,
-        ),
       ),
     );
   }

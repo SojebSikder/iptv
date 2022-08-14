@@ -13,7 +13,7 @@ import 'services/AdmobService.dart';
 void main() {
     WidgetsFlutterBinding.ensureInitialized();
     // Initialize Admob
-    AdmobService.initialize();
+    // AdmobService.initialize();
 
   runApp(
     MultiProvider(

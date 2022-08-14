@@ -21,13 +21,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   late VideoPlayerController _videoPlayerController1;
   late ChewieController _chewieController;
 
-  BannerAd ad = new BannerAd(
-    size: AdSize.banner,
-    adUnitId: AdmobService.bannerAdUnit,
-    // adUnitId: AdmobService.bannerAdTestUnit,
-    listener: AdmobService.bannerAdlistener,
-    request: AdRequest(),
-  );
+  // BannerAd ad = new BannerAd(
+  //   size: AdSize.banner,
+  //   adUnitId: AdmobService.bannerAdUnit,
+  //   // adUnitId: AdmobService.bannerAdTestUnit,
+  //   listener: AdmobService.bannerAdlistener,
+  //   request: AdRequest(),
+  // );
 
   loadData() async {
     // Fetch Category
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addObserver(this);
-    ad.load();
+    // ad.load();
     loadData();
   }
 
@@ -89,15 +89,15 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             ],
           ),
         ),
-        bottomNavigationBar: Container(
-          alignment: Alignment.center,
-          width: AdmobService.createBannerAd().size.width.toDouble(),
-          height: AdmobService.createBannerAd().size.height.toDouble(),
-          child: AdWidget(
-            // key: UniqueKey(),
-            ad: ad,
-          ),
-        ),
+        // bottomNavigationBar: Container(
+        //   alignment: Alignment.center,
+        //   width: AdmobService.createBannerAd().size.width.toDouble(),
+        //   height: AdmobService.createBannerAd().size.height.toDouble(),
+        //   child: AdWidget(
+        //     // key: UniqueKey(),
+        //     ad: ad,
+        //   ),
+        // ),
       ),
     );
   }

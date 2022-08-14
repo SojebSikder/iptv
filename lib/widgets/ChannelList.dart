@@ -12,27 +12,9 @@ class ChannelListWidget extends StatefulWidget {
 }
 
 class _ChannelListWidgetState extends State<ChannelListWidget> {
-  loadData() async {
-    // Fetch Category
-    await context.read<CategoryProvider>().fetchCategory();
-    // Fetch Channels
-    // await context.read<ChannelProvider>().fetchChannels();
-
-    //print(context.read<ChannelProvider>().channels['data']);
-    //print(context.read<CategoryProvider>().category);
-  }
-
   @override
   void initState() {
     super.initState();
-    //loadData();
-  }
-
-  loadCategoryForFuture() async {
-    //var data = await CategoryApi().fetchCategory();
-
-    var result = await ApiService().getData(apiUrl: "/category", auth: false);
-    return result;
   }
 
   @override
@@ -47,10 +29,8 @@ class _ChannelListWidgetState extends State<ChannelListWidget> {
         //
         var category = categoryData.category['data'];
 
-        // fetchChannel();
-        //
         return FutureBuilder(
-          future: loadCategoryForFuture(),
+          future: context.read<CategoryProvider>().fetchCategory(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               // Category List

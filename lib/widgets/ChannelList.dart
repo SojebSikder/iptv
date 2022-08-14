@@ -37,7 +37,6 @@ class _ChannelListWidgetState extends State<ChannelListWidget> {
             if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (snapshot.hasData) {
-              // var category = categoryData.category['data'];
               var category = snapshot.data['data'];
 
               // Category List
@@ -52,15 +51,10 @@ class _ChannelListWidgetState extends State<ChannelListWidget> {
                     subtitle: ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      //   childAspectRatio: 0.9, //cardWidth / cardHeight,
-                      //   crossAxisCount: 2,
-                      // ),
                       itemCount: category[index]['tvs'].length,
                       itemBuilder: (context, i) {
                         var channel = category[index]['tvs'];
 
-                        //print(channel);
                         return channel.isEmpty
                             ? Container()
                             : ListTile(

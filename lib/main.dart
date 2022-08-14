@@ -10,9 +10,7 @@ import 'provider/CategoryProvider.dart';
 import 'provider/ChannelProvider.dart';
 
 void main() {
-    WidgetsFlutterBinding.ensureInitialized();
-    // Initialize Admob
-    // AdmobService.initialize();
+  WidgetsFlutterBinding.ensureInitialized();
 
   runApp(
     MultiProvider(

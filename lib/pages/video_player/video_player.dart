@@ -22,14 +22,6 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
   VideoPlayerController _videoPlayerController1;
   ChewieController _chewieController;
 
-  // BannerAd ad = new BannerAd(
-  //   size: AdSize.banner,
-  //   adUnitId: AdmobService.bannerAdUnit,
-  //   // adUnitId: AdmobService.bannerAdTestUnit,
-  //   listener: AdmobService.bannerAdlistener,
-  //   request: AdRequest(),
-  // );
-
   @override
   void initState() {
     super.initState();
@@ -58,12 +50,6 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
     Wakelock.disable();
   }
 
-  // This is for futureBuilder
-  loadCategoryForFuture() async {
-    var result = await ApiService().getData(apiUrl: "/category", auth: false);
-    return result;
-  }
-
   @override
   Widget build(BuildContext context) {
     // final _screenSize = MediaQuery.of(context).size;
@@ -84,77 +70,66 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
             ),
           ),
           // Channel List
-          Expanded(
-            child: Consumer<CategoryProvider>(
-              builder: (context, categoryData, child) {
-                //
-                var category = categoryData.category['data'];
 
-                // fetchChannel();
-                //
-                return FutureBuilder(
-                  future: loadCategoryForFuture(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      // Category List
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        // physics: NeverScrollableScrollPhysics(),
-                        itemCount: category.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text("${category[index]['title']}"),
-                            // Channel List
-                            subtitle: ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              //   childAspectRatio: 0.9, //cardWidth / cardHeight,
-                              //   crossAxisCount: 2,
-                              // ),
-                              itemCount: category[index]['tvs'].length,
-                              itemBuilder: (context, i) {
-                                var channel = category[index]['tvs'];
+          // fetchChannel();
+          //
+          FutureBuilder(
+              future: context.read<CategoryProvider>().fetchCategory(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  var category = snapshot.data['data'];
+                  // Category List
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    // physics: NeverScrollableScrollPhysics(),
+                    itemCount: category.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text("${category[index]['title']}"),
+                        // Channel List
+                        subtitle: ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: category[index]['tvs'].length,
+                          itemBuilder: (context, i) {
+                            var channel = category[index]['tvs'];
 
-                                //print(channel);
-                                return channel.isEmpty
-                                    ? Container()
-                                    : ListTile(
-                                        onTap: () {
+                            //print(channel);
+                            return channel.isEmpty
+                                ? Container()
+                                : ListTile(
+                                    onTap: () {
+                                      setState(
+                                        () {
+                                          //State
+                                          _chewieController.dispose();
+
                                           setState(() {
-                                            //State
-                                            _chewieController.dispose();
-
-                                            setState(() {
-                                              _videoPlayerController1 =
-                                                  VideoPlayerController.network(
-                                                      "${channel[i]['link']}");
-                                            });
-                                            _chewieController =
-                                                ChewieController(
-                                              videoPlayerController:
-                                                  _videoPlayerController1, //Control the first playback control
-                                              aspectRatio: 3 / 2,
-                                              autoPlay: true,
-                                              looping: true,
-                                            );
+                                            _videoPlayerController1 =
+                                                VideoPlayerController.network(
+                                                    "${channel[i]['link']}");
                                           });
+                                          _chewieController = ChewieController(
+                                            videoPlayerController:
+                                                _videoPlayerController1, //Control the first playback control
+                                            aspectRatio: 3 / 2,
+                                            autoPlay: true,
+                                            looping: true,
+                                          );
                                         },
-                                        title: Text("${channel[i]['title']}"),
                                       );
-                              },
-                            ),
-                          );
-                        },
+                                    },
+                                    title: Text("${channel[i]['title']}"),
+                                  );
+                          },
+                        ),
                       );
-                    } else {
-                      return CircleProgressWidget();
-                    }
-                  },
-                );
-              },
-            ),
-          ),
+                    },
+                  );
+                } else {
+                  return CircleProgressWidget();
+                }
+              })
 
           // End Channel List
         ],

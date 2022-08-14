@@ -8,7 +8,6 @@ import 'pages/splash/splash_page.dart';
 // Provider
 import 'provider/CategoryProvider.dart';
 import 'provider/ChannelProvider.dart';
-import 'services/AdmobService.dart';
 
 void main() {
     WidgetsFlutterBinding.ensureInitialized();

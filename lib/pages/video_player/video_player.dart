@@ -1,9 +1,7 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:iptv/config/app_config.dart';
 import 'package:iptv/provider/CategoryProvider.dart';
-import 'package:iptv/services/AdmobService.dart';
 import 'package:iptv/services/ApiService.dart';
 import 'package:iptv/widgets/CircleProgress.dart';
 import 'package:provider/provider.dart';
@@ -68,7 +66,7 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _screenSize = MediaQuery.of(context).size;
+    // final _screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text(AppConfig().appName()),

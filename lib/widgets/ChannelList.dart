@@ -27,54 +27,64 @@ class _ChannelListWidgetState extends State<ChannelListWidget> {
     return FutureBuilder(
       future: context.read<CategoryProvider>().fetchCategory(),
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          // var category = categoryData.category['data'];
-          var category = snapshot.data['data'];
-          // Category List
-          return ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: category['data'].length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text("${category[index]['title']}"),
-                // Channel List
-                subtitle: ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  //   childAspectRatio: 0.9, //cardWidth / cardHeight,
-                  //   crossAxisCount: 2,
-                  // ),
-                  itemCount: category[index]['tvs'].length,
-                  itemBuilder: (context, i) {
-                    var channel = category[index]['tvs'];
+        //
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          default:
+            if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else if (snapshot.hasData) {
+              // var category = categoryData.category['data'];
+              var category = snapshot.data['data'];
+              // Category List
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: category.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text("${category[index]['title']}"),
+                    // Channel List
+                    subtitle: ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      //   childAspectRatio: 0.9, //cardWidth / cardHeight,
+                      //   crossAxisCount: 2,
+                      // ),
+                      itemCount: category[index]['tvs'].length,
+                      itemBuilder: (context, i) {
+                        var channel = category[index]['tvs'];
 
-                    //print(channel);
-                    return channel.isEmpty
-                        ? Container()
-                        : ListTile(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (builder) {
-                                    return VideoPlayerPage(
-                                      link: channel[i]['link'],
-                                    );
-                                  },
-                                ),
+                        //print(channel);
+                        return channel.isEmpty
+                            ? Container()
+                            : ListTile(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (builder) {
+                                        return VideoPlayerPage(
+                                          link: channel[i]['link'],
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                                title: Text("${channel[i]['title']}"),
                               );
-                            },
-                            title: Text("${channel[i]['title']}"),
-                          );
-                  },
-                ),
+                      },
+                    ),
+                  );
+                },
               );
-            },
-          );
-        } else {
-          return CircleProgressWidget();
+            } else {
+              return CircleProgressWidget();
+            }
         }
       },
     );
